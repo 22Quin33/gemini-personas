@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "forceDefault": false,
+  "models": {
+    "hydrogen": {
+      "useCustom": false,
+      "selfName": "",
+      "title": "",
+      "badgeIcon": "",
+      "appearance": "",
+      "style": "",
+      "emojis": "",
+      "prompt": ""
+    },
+    "carbon": {
+      "useCustom": false,
+      "selfName": "",
+      "title": "",
+      "badgeIcon": "",
+      "appearance": "",
+      "style": "",
+      "emojis": "",
+      "prompt": ""
+    },
+    "neon": {
+      "useCustom": false,
+      "selfName": "",
+      "title": "",
+      "badgeIcon": "",
+      "appearance": "",
+      "style": "",
+      "emojis": "",
+      "prompt": ""
+    }
+  },
+  "customModelRules": [],
+  "orchestrator": {
+    "useCustom": false,
+    "variants": {
+      "carbon": {
+        "useCustom": false,
+        "lead": {
+          "personaId": "carbon",
+          "customOverride": {
+            "enabled": false,
+            "selfName": "",
+            "roleTitle": "",
+            "badgeIcon": "",
+            "appearance": "",
+            "style": "",
+            "emojis": ""
+          }
+        },
+        "partner": {
+          "personaId": "hydrogen",
+          "customOverride": {
+            "enabled": false,
+            "selfName": "",
+            "roleTitle": "",
+            "badgeIcon": "",
+            "appearance": "",
+            "style": "",
+            "emojis": ""
+          }
+        },
+        "interactionStyle": "",
+        "speakingRatio": "",
+        "prompt": ""
+      },
+      "neon": {
+        "useCustom": false,
+        "lead": {
+          "personaId": "neon",
+          "customOverride": {
+            "enabled": false,
+            "selfName": "",
+            "roleTitle": "",
+            "badgeIcon": "",
+            "appearance": "",
+            "style": "",
+            "emojis": ""
+          }
+        },
+        "partner": {
+          "personaId": "hydrogen",
+          "customOverride": {
+            "enabled": false,
+            "selfName": "",
+            "roleTitle": "",
+            "badgeIcon": "",
+            "appearance": "",
+            "style": "",
+            "emojis": ""
+          }
+        },
+        "interactionStyle": "",
+        "speakingRatio": "",
+        "prompt": ""
+      },
+      "default": {
+        "useCustom": false,
+        "lead": {
+          "personaId": "carbon",
+          "customOverride": {
+            "enabled": false,
+            "selfName": "",
+            "roleTitle": "",
+            "badgeIcon": "",
+            "appearance": "",
+            "style": "",
+            "emojis": ""
+          }
+        },
+        "partner": {
+          "personaId": "hydrogen",
+          "customOverride": {
+            "enabled": false,
+            "selfName": "",
+            "roleTitle": "",
+            "badgeIcon": "",
+            "appearance": "",
+            "style": "",
+            "emojis": ""
+          }
+        },
+        "interactionStyle": "",
+        "speakingRatio": "",
+        "prompt": ""
+      }
+    }
+  }
+}

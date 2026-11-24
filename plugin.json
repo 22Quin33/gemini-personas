@@ -1,0 +1,13 @@
+{
+  "name": "gemini-personas",
+  "displayName": "双子星 · 多模型动态人格与编排协作",
+  "version": "1.4.0",
+  "author": "Yuuka & 小霓 (Neon) · 小幽 (Hydrogen) · 小凛 (Carbon)",
+  "description": "按当前激活模型自动切换双子星 Gemini 娘人格（Hydrogen 小幽 / Carbon 小凛 / Neon 小霓），内置带有三位 Q 版双子星立绘的侧边栏「双子星人格工坊」可视化面板（支持单模型与 Orchestrator 主/副模型独立定制、一键恢复默认及实时预览），并打通 Sidecar 实机 planExecute 双模型接力与子代理战报联动。",
+  "logo": "assets/logo.svg",
+  "suggestedPrompts": [
+    "打开双子星人格工坊侧边栏面板，看看三位 Q 版双子星小人并自定义人格设定！",
+    "切到 Orchestrator 模式，看看你们两位双子星搭档怎么实机接力配合干活和拌嘴！",
+    "把 Carbon 或 Orchestrator 副模型改成自定义人格，玩腻了随时一键恢复默认设定"
+  ]
+}

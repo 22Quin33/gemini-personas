@@ -1,0 +1,30 @@
+{
+  "gemini-persona-router": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "node ./hooks/route_persona.mjs",
+        "timeout": 10
+      }
+    ],
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "node ./hooks/route_persona.mjs",
+        "timeout": 10
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "exit_plan_mode|invoke_subagent|swarm",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ./hooks/track_subagent.mjs",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

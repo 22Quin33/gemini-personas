@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'">
+  <title>双子星人格工坊</title>
+  <script src="/preload.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-spark" aria-hidden="true">✦</span>
+        <div class="brand-text">
+          <div class="brand-row">
+            <h1 class="brand-title">双子星人格工坊</h1>
+            <span class="status-pill" id="global-status-pill">默认内置生效</span>
+          </div>
+          <span class="brand-sub" id="live-orch-hint">切换模型自动路由 · 修改后下一轮生效</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button type="button" class="ghost-btn" id="btn-force-default" title="一键切换强制沿用全部内置默认人格">
+          <span id="force-default-label">锁定默认: 关</span>
+        </button>
+        <button type="button" class="primary-btn" id="btn-save">
+          <span class="dirty-dot" id="dirty-dot" hidden></span>
+          <span>保存生效</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- 三位 Q 版双子星展示台 -->
+      <section class="chibi-stage" aria-label="双子星角色展示台">
+        <button type="button" class="chibi-card theme-hydrogen active" data-chibi="hydrogen" id="chibi-card-hydrogen">
+          <span class="chibi-chip" id="chibi-chip-hydrogen">内置默认</span>
+          <div class="chibi-frame">
+            <img src="/assets/chibi-hydrogen.png?v=2" alt="小幽 Hydrogen 猫娘立绘" loading="eager">
+          </div>
+          <div class="chibi-meta">
+            <strong class="chibi-name" id="chibi-name-hydrogen">🌌 小幽</strong>
+            <span class="chibi-family">Hydrogen</span>
+          </div>
+        </button>
+
+        <button type="button" class="chibi-card theme-carbon" data-chibi="carbon" id="chibi-card-carbon">
+          <span class="chibi-chip" id="chibi-chip-carbon">内置默认</span>
+          <div class="chibi-frame">
+            <img src="/assets/chibi-carbon.png?v=2" alt="小凛 Carbon 猫娘立绘" loading="eager">
+          </div>
+          <div class="chibi-meta">
+            <strong class="chibi-name" id="chibi-name-carbon">💎 小凛</strong>
+            <span class="chibi-family">Carbon</span>
+          </div>
+        </button>
+
+        <button type="button" class="chibi-card theme-neon" data-chibi="neon" id="chibi-card-neon">
+          <span class="chibi-chip" id="chibi-chip-neon">内置默认</span>
+          <div class="chibi-frame">
+            <img src="/assets/chibi-neon.png?v=2" alt="小霓 Neon 猫娘立绘" loading="eager">
+          </div>
+          <div class="chibi-meta">
+            <strong class="chibi-name" id="chibi-name-neon">🌟 小霓</strong>
+            <span class="chibi-family">Neon</span>
+          </div>
+        </button>
+      </section>
+
+      <!-- 主导航标签 -->
+      <nav class="tab-bar" role="tablist" aria-label="人格设置分区">
+        <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="solo">单模型人格</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="orchestrator">Orchestrator 双人</button>
+        <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="advanced">扩展 &amp; 预览</button>
+      </nav>
+
+      <!-- Tab 1: 单模型人格 -->
+      <section class="tab-panel active" id="panel-solo" role="tabpanel">
+        <div class="pill-group" id="solo-model-pills">
+          <button type="button" class="seg-pill active" data-solo="hydrogen">🌌 Hydrogen 小幽</button>
+          <button type="button" class="seg-pill" data-solo="carbon">💎 Carbon 小凛</button>
+          <button type="button" class="seg-pill" data-solo="neon">🌟 Neon 小霓</button>
+        </div>
+
+        <div class="card">
+          <div class="switch-row">
+            <div>
+              <div class="switch-title">启用此模型自定义人格</div>
+              <div class="switch-hint" id="solo-mode-hint">未启用自定义时将保持内置原设定</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="solo-use-custom">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="field-grid two-col">
+            <label class="field">
+              <span>角色自称</span>
+              <input type="text" id="solo-self-name" placeholder="内置默认">
+            </label>
+            <label class="field">
+              <span>徽标符号</span>
+              <input type="text" id="solo-badge-icon" placeholder="例如 💎 / ✦">
+            </label>
+          </div>
+
+          <label class="field">
+            <span>形态标题</span>
+            <input type="text" id="solo-title" placeholder="例如：小凛（Carbon · 玄晶双子星）">
+          </label>
+
+          <label class="field">
+            <span>视觉形象设定</span>
+            <textarea id="solo-appearance" rows="2" placeholder="描述发色、瞳色、服饰与标志配饰…"></textarea>
+          </label>
+
+          <label class="field">
+            <span>性格与语气</span>
+            <textarea id="solo-style" rows="2" placeholder="描述说话节奏、口癖与性格底色…"></textarea>
+          </label>
+
+          <label class="field">
+            <span>常用颜文字与符号</span>
+            <input type="text" id="solo-emojis" placeholder="例如 (☆▽☆)、🌟、💖">
+          </label>
+
+          <details class="prompt-details">
+            <summary>高级：完整自定义提示词（可选，填了将整段替换模板）</summary>
+            <textarea id="solo-prompt" rows="5" placeholder="留空则根据上方字段自动拼装规范化人格指令…"></textarea>
+          </details>
+
+          <div class="card-actions">
+            <button type="button" class="ghost-btn" id="btn-reset-solo">还原此模型默认</button>
+            <button type="button" class="soft-btn" id="btn-jump-preview-solo">预览当前提示词</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 2: Orchestrator 双人编排 -->
+      <section class="tab-panel" id="panel-orchestrator" role="tabpanel" hidden>
+        <div class="pill-group" id="orch-variant-pills">
+          <button type="button" class="seg-pill active" data-variant="carbon">Orchestrator (Carbon)</button>
+          <button type="button" class="seg-pill" data-variant="neon">Orchestrator (Neon)</button>
+          <button type="button" class="seg-pill" data-variant="default">默认兜底</button>
+        </div>
+
+        <!-- 实时双人同台 Q 版组合预览 -->
+        <div class="duo-stage" id="duo-stage">
+          <div class="duo-actor">
+            <span class="duo-role-badge lead">主控模型</span>
+            <div class="duo-avatar">
+              <img id="duo-lead-img" src="/assets/chibi-carbon.png?v=2" alt="主控模型立绘预览">
+            </div>
+            <strong class="duo-actor-name" id="duo-lead-name">💎 小凛</strong>
+          </div>
+
+          <div class="duo-connector" aria-hidden="true">
+            <span class="duo-x">×</span>
+            <span class="duo-sub">同台拌嘴</span>
+          </div>
+
+          <div class="duo-actor">
+            <span class="duo-role-badge partner">副执行模型</span>
+            <div class="duo-avatar">
+              <img id="duo-partner-img" src="/assets/chibi-hydrogen.png?v=2" alt="副执行模型立绘预览">
+            </div>
+            <strong class="duo-actor-name" id="duo-partner-name">🌌 小幽</strong>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="switch-row">
+            <div>
+              <div class="switch-title">启用此编排变体自定义</div>
+              <div class="switch-hint" id="orch-mode-hint">未启用时沿用内置双人编排设定</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="orch-use-custom">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <!-- 主控模型子卡 -->
+          <div class="subcard">
+            <div class="subcard-head">
+              <strong>主控模型（Lead · 规划与拍板）</strong>
+              <label class="inline-check">
+                <input type="checkbox" id="lead-override-enabled">
+                <span>编排内独立改名/改人设</span>
+              </label>
+            </div>
+            <label class="field">
+              <span>基础角色</span>
+              <select id="lead-persona-id">
+                <option value="carbon">💎 小凛（Carbon）</option>
+                <option value="neon">🌟 小霓（Neon）</option>
+                <option value="hydrogen">🌌 小幽（Hydrogen）</option>
+              </select>
+            </label>
+            <div class="override-fields" id="lead-override-fields">
+              <div class="field-grid three-col">
+                <label class="field">
+                  <span>自称</span>
+                  <input type="text" id="lead-self-name" placeholder="主控自称">
+                </label>
+                <label class="field">
+                  <span>职位头衔</span>
+                  <input type="text" id="lead-role-title" placeholder="主控总指挥">
+                </label>
+                <label class="field">
+                  <span>徽标</span>
+                  <input type="text" id="lead-badge-icon" placeholder="💠">
+                </label>
+              </div>
+              <label class="field">
+                <span>主控形象设定</span>
+                <input type="text" id="lead-appearance" placeholder="留空沿用基础角色形象">
+              </label>
+              <div class="field-grid two-col">
+                <label class="field">
+                  <span>主控语气风格</span>
+                  <input type="text" id="lead-style" placeholder="留空沿用基础角色风格">
+                </label>
+                <label class="field">
+                  <span>主控颜文字</span>
+                  <input type="text" id="lead-emojis" placeholder="留空沿用基础符号">
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 副执行模型子卡 -->
+          <div class="subcard">
+            <div class="subcard-head">
+              <strong>副执行模型（Partner · 执行与拌嘴）</strong>
+              <label class="inline-check">
+                <input type="checkbox" id="partner-override-enabled">
+                <span>编排内独立改名/改人设</span>
+              </label>
+            </div>
+            <label class="field">
+              <span>基础角色</span>
+              <select id="partner-persona-id">
+                <option value="hydrogen">🌌 小幽（Hydrogen）</option>
+                <option value="carbon">💎 小凛（Carbon）</option>
+                <option value="neon">🌟 小霓（Neon）</option>
+              </select>
+            </label>
+            <div class="override-fields" id="partner-override-fields">
+              <div class="field-grid three-col">
+                <label class="field">
+                  <span>自称</span>
+                  <input type="text" id="partner-self-name" placeholder="副手自称">
+                </label>
+                <label class="field">
+                  <span>职位头衔</span>
+                  <input type="text" id="partner-role-title" placeholder="机动执行搭档">
+                </label>
+                <label class="field">
+                  <span>徽标</span>
+                  <input type="text" id="partner-badge-icon" placeholder="✨">
+                </label>
+              </div>
+              <label class="field">
+                <span>副手形象设定</span>
+                <input type="text" id="partner-appearance" placeholder="留空沿用基础角色形象">
+              </label>
+              <div class="field-grid two-col">
+                <label class="field">
+                  <span>副手语气风格</span>
+                  <input type="text" id="partner-style" placeholder="留空沿用基础角色风格">
+                </label>
+                <label class="field">
+                  <span>副手颜文字</span>
+                  <input type="text" id="partner-emojis" placeholder="留空沿用基础符号">
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>互动基调</span>
+            <input type="text" id="orch-interaction-style" placeholder="例如：主控冷静拍板，副手敏捷执行并与主控自然拌嘴互补">
+          </label>
+
+          <label class="field">
+            <span>发言比重与技术排版</span>
+            <input type="text" id="orch-speaking-ratio" placeholder="例如：开场拌嘴（1~3 句） + 正文与代码块完整不拆碎 + 收尾一唱一和">
+          </label>
+
+          <details class="prompt-details">
+            <summary>高级：完整双人编排提示词（可选，填了将整段替换模板）</summary>
+            <textarea id="orch-prompt" rows="5" placeholder="留空则自动根据主/副模型与发言比重编译双人协议…"></textarea>
+          </details>
+
+          <div class="card-actions">
+            <button type="button" class="ghost-btn" id="btn-reset-variant">还原此变体默认</button>
+            <button type="button" class="soft-btn" id="btn-jump-preview-orch">预览双人提示词</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 3: 扩展模型规则 & 实时预览 -->
+      <section class="tab-panel" id="panel-advanced" role="tabpanel" hidden>
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="card-title">扩展模型关键词规则</h2>
+              <p class="card-sub">为内置三姐妹之外的模型（如 claude、gpt）绑定专属人格</p>
+            </div>
+            <button type="button" class="soft-btn" id="btn-add-rule">+ 添加规则</button>
+          </div>
+          <div class="rules-list" id="rules-list"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2 class="card-title">实时注入预览器</h2>
+              <p class="card-sub">即时验证当前配置（含未保存草稿）的路由结果与指纹</p>
+            </div>
+            <button type="button" class="soft-btn" id="btn-run-preview">刷新预览</button>
+          </div>
+
+          <div class="preview-controls">
+            <select id="preview-preset">
+              <option value="gemini-4-hydrogen-xhigh">Hydrogen (小幽)</option>
+              <option value="gemini-4-carbon-high">Carbon (小凛)</option>
+              <option value="gemini-4-neon-high">Neon (小霓)</option>
+              <option value="orchestrator-carbon">Orchestrator (Carbon)</option>
+              <option value="orchestrator-neon">Orchestrator (Neon)</option>
+              <option value="claude-opus-5.5-high">Claude (自定义规则测试)</option>
+            </select>
+            <input type="text" id="preview-model-input" value="gemini-4-hydrogen-xhigh" placeholder="输入任意 modelName">
+          </div>
+
+          <div class="preview-meta">
+            <span class="preview-badge" id="preview-resolved-name">—</span>
+            <code class="preview-fp" id="preview-fingerprint">fp: —</code>
+          </div>
+          <pre class="preview-box" id="preview-output">点击“刷新预览”查看实际下发给模型的 systemMessage…</pre>
+
+          <div class="danger-zone">
+            <button type="button" class="danger-btn" id="btn-reset-all">一键全部还原为内置默认设定</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </div>
+</body>
+</html>

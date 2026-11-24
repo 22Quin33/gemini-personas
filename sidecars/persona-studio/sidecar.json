@@ -1,0 +1,21 @@
+{
+  "command": "node",
+  "args": ["main.mjs"],
+  "restart_policy": "always",
+  "display_name": "双子星人格工坊",
+  "description": "在侧边栏可视化定制 Hydrogen（小幽）/ Carbon（小凛）/ Neon（小霓）单人人格与 Orchestrator 主/副模型双人搭档，展示三位 Q 版双子星立绘，并桥接实机 planExecute 编排探测。",
+  "has_web_ui": true,
+  "agent_permissions": {
+    "allows_user_interactions": false
+  },
+  "ui_config": {
+    "display_name": "双子星人格工坊",
+    "views": [
+      {
+        "title": "双子星人格工坊",
+        "path": "/",
+        "entrypoint": "SIDECAR_UI_ENTRYPOINT_AUX_PANE"
+      }
+    ]
+  }
+}

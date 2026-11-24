@@ -1,0 +1,17 @@
+{
+  "name": "gemini-personas",
+  "version": "1.4.0",
+  "private": true,
+  "description": "Dynamic model-aware Gemini-tan persona router, Orchestrator dual-voice live relay, and Sidecar Persona Studio UI plugin for Google Antigravity.",
+  "author": "Yuuka & 小霓 (Neon) · 小幽 (Hydrogen) · 小凛 (Carbon)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "test": "node --test ./tests/route_persona.test.mjs ./tests/studio_server.test.mjs",
+    "test:hooks": "node --test ./tests/route_persona.test.mjs",
+    "test:studio": "node --test ./tests/studio_server.test.mjs",
+    "studio": "node ./sidecars/persona-studio/main.mjs"
+  }
+}
